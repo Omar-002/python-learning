@@ -1,0 +1,82 @@
+### Rule
+List comprehensions are a shorter, cleaner way to build lists from loops.
+You will see them everywhere in AI and data science code.
+Use them when you want to build a new list by transforming or filtering another.
+
+### Structure
+```python
+[expression for item in list]             # basic
+[expression for item in list if condition] # with filter
+```
+
+### Basic loop vs list comprehension (least efficient)
+```python
+# old way — 4 lines
+numbers = [1, 2, 3, 4, 5]
+doubled = []
+for number in numbers:
+    doubled.append(number * 2)
+print(doubled)
+```
+
+### Basic list comprehension (most efficient)
+```python
+# new way — 1 line, same result
+numbers = [1, 2, 3, 4, 5]
+doubled = [number * 2 for number in numbers]
+print(doubled)  # [2, 4, 6, 8, 10]
+```
+
+### With a filter (least efficient)
+```python
+# old way
+words = ["ai", "python", "loop", "model", "data", "ml", "neural"]
+long_words = []
+for w in words:
+    if len(w) > 4:
+        long_words.append(w)
+print(long_words)
+```
+
+### With a filter (most efficient)
+```python
+# list comprehension with condition
+words = ["ai", "python", "loop", "model", "data", "ml", "neural"]
+long_words = [w for w in words if len(w) > 4]
+print(long_words)  # ['python', 'model', 'neural']
+```
+
+### With range() (least efficient)
+```python
+# old way
+squares = []
+for n in range(1, 11):
+    squares.append(n ** 2)
+print(squares)
+```
+
+### With range() (most efficient)
+```python
+# one line — generate and transform at the same time
+squares = [n ** 2 for n in range(1, 11)]
+print(squares)  # [1, 4, 9, 16, 25, 36, 49, 64, 81, 100]
+```
+
+### Common mistakes
+```python
+# mistake 1 — confusing * 2 (double) with ** 2 (square)
+[n * 2 for n in numbers]   # doubles: 2, 4, 6, 8, 10
+[n ** 2 for n in numbers]  # squares: 1, 4, 9, 16, 25
+
+# mistake 2 — range stopping one short
+range(1, 10)   # gives 1 to 9 — stops before 10
+range(1, 11)   # gives 1 to 10 — correct
+
+# mistake 3 — naming variables after Python built-ins
+list  = [...]  # bad — overwrites Python's built-in list
+long_words = [...]  # good — safe descriptive name
+```
+
+### Built-in names to never use as variables
+- list, dict, str, int
+- input, print, type, len
