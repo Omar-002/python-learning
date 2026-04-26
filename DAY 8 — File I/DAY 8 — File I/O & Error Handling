@@ -1,0 +1,120 @@
+Rule
+
+Files let your program save and load data permanently
+Always use with — it closes the file automatically
+"w" = write mode, "r" = read mode, "a" = append mode
+Wrap file operations in try/except so your program doesn't crash
+
+Writing to a file (least efficient):
+# manually opening and closing — easy to forget .close()
+file = open("answers.txt", "w")
+file.write("question1 : 10\n")
+file.write("question2 : python\n")
+file.write("question3 : creates a function\n")
+file.close()
+
+Writing to a file (most efficient):
+# with — closes automatically, cleaner and safer
+with open("answers.txt", "w") as file:
+    file.write("question1 : 10\n")
+    file.write("question2 : python\n")
+    file.write("question3 : creates a function\n")
+
+Reading a file (least efficient):
+# no error handling — crashes if file doesn't exist
+with open("answers.txt", "r") as file:
+    content = file.read()
+    print(content)
+
+Reading a file (most efficient):
+# with try/except — handles missing file gracefully
+try:
+    with open("answers.txt", "r") as file:
+        content = file.read()
+        print(content)
+except FileNotFoundError:
+    print("Sorry, that file doesn't exist!")
+
+Reading methods:
+# .read() — entire file as one string
+with open("answers.txt", "r") as file:
+    content = file.read()
+    print(content)
+
+# .readlines() — each line as a list item, useful for looping
+with open("answers.txt", "r") as file:
+    lines = file.readlines()
+    for line in lines:
+        print(line)
+
+Error handling:
+# catching a specific error
+try:
+    with open("missing.txt", "r") as file:
+        content = file.read()
+except FileNotFoundError:
+    print("Sorry, that file doesn't exist!")
+
+# catching multiple errors
+try:
+    with open("missing.txt", "r") as file:
+        content = file.read()
+except FileNotFoundError:
+    print("Sorry, that file doesn't exist!")
+except PermissionError:
+    print("Sorry, you don't have access to that file!")
+except Exception:
+    print("Something went wrong!")
+
+Mini challenge — quiz with score saving (most efficient):
+correct_answers = {
+    "question1": "10",
+    "question2": "python",
+    "question3": "creates a function"
+}
+
+questions = {
+    "question1": "What is 5 + 5? ",
+    "question2": "What language are we learning? ",
+    "question3": "What does def do in Python? "
+}
+
+def check_answer(user_answer, correct_answer):
+    return user_answer.lower() == correct_answer.lower()
+
+score = 0
+
+for key, question in questions.items():
+    user_answer = input(question)
+    if check_answer(user_answer, correct_answers[key]):
+        print("Correct!")
+        score += 1
+    else:
+        print("Wrong!")
+
+print(f"You got {score} out of {len(questions)} correct!")
+
+try:
+    with open("scores.txt", "w") as file:
+        file.write(f"You got {score} out of {len(questions)} correct!\n")
+    print("Score saved to scores.txt!")
+except Exception:
+    print("Something went wrong saving the score!")
+
+
+Key Rules Summary:
+Indentation:  Always 4 spaces. Colon at end of line = next line must be indented
+Variables:  Use variables instead of hardcoding values
+Lists:  For collections of similar items
+Dictionaries:  For items with different properties that belong together
+Functions:  Write once, use anywhere. Always return if you need the value back
+Loops:  Use enumerate() over range(len()) when you need index + item
+Files:  Always use with. Always wrap in try/except
+f-strings:  Use f"{variable}" to embed variables cleanly inside strings
+.lower():  Use when comparing strings so capitalisation doesn't matter
+
+
+
+
+
+
